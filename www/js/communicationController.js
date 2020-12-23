@@ -1,13 +1,7 @@
 class CommunicationController {
     baseUrl = "https://ewserver.di.unimi.it/mobicomp/accordo/";
 
-    getWall() {
-        let response = function(result) {
-            for (let i = 0; i < result.channels.length; i++) {
-                console.log(result.channels[i])
-                $("#channelsList").append("<li class='list-group-item'>" + result.channels[i].ctitle + "</li>")
-            }
-        }
+    getWall(response) {
         this.makeAjaxRequest("getWall.php", response)
     }
 
