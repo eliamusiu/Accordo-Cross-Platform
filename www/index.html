@@ -34,20 +34,40 @@
     <link rel="stylesheet" href="lib/all.css">
     <script src="js/communicationController.js"></script>
     <script src="js/wall.js"></script>
+    <script src="js/channel.js"></script>
     <title>Accordo</title>
 </head>
 
 <body>
-    
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
         <div class="container">
-            <a class="navbar-brand align-middle">Accordo</a>
+            <a class="navbar-brand align-middle" id="screenTitle" href="#">Accordo</a>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item js">
-                    <a class="nav-link" href="#">
+                <li class="nav-item">
+                    <a class="nav-link" id="newChannelNavA" data-toggle="modal" data-target="#newChannelModal" href="#">
+                        <i class="fas fa-plus mr-2"></i>
+                        Nuovo canale
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-user mr-2"></i>
                         Profilo
                     </a>
+                    <div class="dropdown-menu">
+                        <div id="editProfileDropdown">
+                            <h4>Modifica profilo</h4>
+
+                            <img id="editProfilePic"/>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
+                            </div>
+
+                            <button type="button" class="btn btn-primary" id="saveProfileChanges">Salva</button>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -58,6 +78,66 @@
             <!-- lista dei canali -->
         </ul>
     </div>
+
+    <div class="container screen" id="channelScreen">
+        <div id="postsList">
+            <!-- lista dei post -->
+            <!-- Template post
+            <div class='post post-text'>
+                <div class='authorDiv'>
+                    <img/>
+                    <p class='authorP'></p>
+                </div>
+                <p class='content'></p>
+            </div>
+
+            <div class='post post-location'>
+                <div class='authorDiv'>
+                    <img/>
+                    <p class='authorP'></p>
+                </div>
+                <button class='locationButton btn btn-secondary'></p>
+            </div>
+            -->
+        </div>
+
+        <div class="container fixed-bottom" id="newPostDiv">
+            <div class="row">
+                <div class="col-10">
+                    <input type="text" class="form-control" id="postInputText" placeholder="Scrivi un post..." />
+                </div>
+
+                <button class="btn btn-secondary col-1" id="attachButton"><i class="fas fa-paperclip"></i></button>
+
+                <button class="btn btn-primary col-1" id="sendButton"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuovo canale</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary">Aggiungi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/all.js"></script>

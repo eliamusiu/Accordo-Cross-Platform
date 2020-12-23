@@ -108,8 +108,35 @@ h1 {
     } */
 }
 
-#wallScreen {
+/* CSS Accordo */
+
+.screen {
     margin-top: 4em;
 }
 
+#channelScreen {
+    padding-bottom: 4em;
+}
 
+#editProfileDropdown {
+    padding: 2em;
+}
+
+.dropdown-menu {
+    width: 20em !important;
+}
+
+.post {
+    padding: 1em;
+    margin: 1em;
+    background-color: #0000001f;
+    border-radius: 1em;
+}
+
+.authorDiv {
+    margin-bottom: 0.5em;
+}
+
+#newPostDiv {
+    background-color: white;
+}

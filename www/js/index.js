@@ -25,3 +25,8 @@ function onDeviceReady() {
     let wall = new Wall();
     wall.getWall();
 }
+
+function showScreen(id) {
+    $(".screen").hide();
+    $(id).show();
+}
