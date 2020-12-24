@@ -19,14 +19,20 @@
 
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
-document.addEventListener('deviceready', onDeviceReady, false);
+document.addEventListener('deviceready', onDeviceReady, false)
 
 function onDeviceReady() {
-    let wall = new Wall();
-    wall.getWall();
+    showScreen("#wallScreen")
+    let wall = new Wall()
+    wall.getWall()
 }
 
 function showScreen(id) {
-    $(".screen").hide();
-    $(id).show();
+    $(".screen").hide()
+    $(id).show()
+    if (id == "#channelScreen") {
+        $("#newPostDiv").show()
+    } else {
+        $("#newPostDiv").hide()
+    }
 }

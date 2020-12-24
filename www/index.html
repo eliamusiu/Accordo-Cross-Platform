@@ -35,31 +35,36 @@
     <script src="js/communicationController.js"></script>
     <script src="js/wall.js"></script>
     <script src="js/channel.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/user.js"></script>
     <title>Accordo</title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
         <div class="container">
             <a class="navbar-brand align-middle" id="screenTitle" href="#">Accordo</a>
             <ul class="navbar-nav ml-auto">
+                <!-- Nuovo canale -->
                 <li class="nav-item">
                     <a class="nav-link" id="newChannelNavA" data-toggle="modal" data-target="#newChannelModal" href="#">
                         <i class="fas fa-plus mr-2"></i>
-                        Nuovo canale
                     </a>
                 </li>
+                <!-- Profilo -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-user mr-2"></i>
-                        Profilo
-                    </a>
-                    <div class="dropdown-menu">
-                        <div id="editProfileDropdown">
+                    <div class="dropdown show">
+                        <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button"
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user mr-2"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" id="profileDropdownDiv" aria-labelledby="dropdownMenuLink">
                             <h4>Modifica profilo</h4>
 
-                            <img id="editProfilePic"/>
+                            <img id="editProfilePic" />
 
                             <div class="form-group">
                                 <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
@@ -73,12 +78,16 @@
         </div>
     </nav>
 
+    <!-- WALL SCREEN -->
     <div class="container screen" id="wallScreen">
+        <div role="alert" id="wallAlert">
+        </div>
         <ul class="list-group" id="channelsList">
             <!-- lista dei canali -->
         </ul>
     </div>
 
+    <!-- CHANNEL SCREEN -->
     <div class="container screen" id="channelScreen">
         <div id="postsList">
             <!-- lista dei post -->
@@ -101,20 +110,41 @@
             -->
         </div>
 
-        <div class="container fixed-bottom" id="newPostDiv">
-            <div class="row">
-                <div class="col-10">
+        <!-- Invio post -->
+        <div class="container fixed-bottom p-2" id="newPostDiv">
+            <div class="row no-gutters">
+                <div class="col-8">
                     <input type="text" class="form-control" id="postInputText" placeholder="Scrivi un post..." />
                 </div>
 
-                <button class="btn btn-secondary col-1" id="attachButton"><i class="fas fa-paperclip"></i></button>
+                <!-- Bottone allega -->
+                <div class="dropdown show col-2 px-2">
+                    <a class="btn btn-secondary dropdown-toggle btn-block" id="attachButton" href="#" role="button"
+                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-paperclip"></i>
+                    </a>
 
-                <button class="btn btn-primary col-1" id="sendButton"><i class="fas fa-paper-plane"></i></button>
+                    <div class="dropdown-menu w-20" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-image"></i>
+                            Immagine
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-map-marker-alt"></i>
+                            Posizione
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottone invia -->
+                <div class="col-2">
+                    <button class="btn btn-primary btn-block" id="sendButton"><i class="fas fa-paper-plane"></i></button>
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal aggiunta canale -->
     <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -125,19 +155,23 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
+                        <input type="text" class="form-control" id="ctitleInput" placeholder="Nome canale">
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
-                    <button type="button" class="btn btn-primary">Aggiungi</button>
+                    <button type="button" class="btn btn-primary" id="addNewChannelButton" data-dismiss="modal">
+                        Aggiungi</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="lib/popper.min.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src="lib/bootstrap.min.js"></script>
     <script src="lib/all.js"></script>

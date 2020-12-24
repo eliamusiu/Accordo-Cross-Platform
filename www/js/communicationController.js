@@ -51,7 +51,7 @@ class CommunicationController {
         });
     }
 
-    setProfile(name, picture, response) {
+    setProfile(name, picture, response, error) {
         let jsonData = {
             sid : this.sid,
             name: name,
@@ -63,9 +63,35 @@ class CommunicationController {
             data: JSON.stringify(jsonData),
             dataType: 'json',
             success: response,
+            error: error
+        });
+    }
+
+    getProfile(response) {
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "getProfile.php",
+            data: JSON.stringify({ sid : this.sid }),
+            dataType: 'json',
+            success: response,
             error: function (error) {
                 console.error(error);
             }
+        });
+    }
+
+    addChannel(ctitle, response, error) {
+        let jsonData = {
+            sid : this.sid,
+            ctitle: ctitle
+        }
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "addChannel.php",
+            data: JSON.stringify(jsonData),
+            dataType: 'json',
+            success: response,
+            error: error
         });
     }
 }

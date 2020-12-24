@@ -118,13 +118,18 @@ h1 {
     padding-bottom: 4em;
 }
 
-#editProfileDropdown {
-    padding: 2em;
+#profileDropdownDiv {
+    padding: 1em;
 }
 
 .dropdown-menu {
     width: 20em !important;
 }
+
+#profileAlert {
+    margin: 0 !important;
+}
+
 
 .post {
     padding: 1em;
@@ -140,3 +145,4 @@ h1 {
 #newPostDiv {
     background-color: white;
 }
+
