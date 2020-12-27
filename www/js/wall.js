@@ -1,7 +1,11 @@
 class Wall {  
+    channel
+    communicationController
+
     constructor() {
         $("#saveProfileChanges").click(this.setProfile)
         $("#addNewChannelButton").click(this.addChannel)
+        this.communicationController = new CommunicationController();
         this.getProfile()
     }
 
@@ -15,8 +19,7 @@ class Wall {
             $("#wallAlert").attr("class", "alert alert-danger")
             $("#wallAlert").html("Errore nell'aggiornamento delle informazioni")
         }
-        let communicationController = new CommunicationController();
-        communicationController.setProfile($("#editUsername").val(), null, response, error)
+        this.communicationController.setProfile($("#editUsername").val(), null, response, error)
     }
 
     getProfile() {
@@ -30,8 +33,7 @@ class Wall {
             this._actualUser = Model.getInstance().actualUser
             $("#editUsername").val(this._actualUser.name)
         }
-        let communicationController = new CommunicationController();
-        communicationController.getProfile(response)
+        this.communicationController.getProfile(response)
     }
 
     addChannel() {
@@ -43,8 +45,7 @@ class Wall {
             $("#wallAlert").attr("class", "alert alert-danger")
             $("#wallAlert").html("Errore nell'aggiunta del canale")
         }
-        let communicationController = new CommunicationController();
-        communicationController.addChannel($("#ctitleInput").val(), response, error)
+        this.communicationController.addChannel($("#ctitleInput").val(), response, error)
     }
 
     getWall() {
@@ -55,11 +56,10 @@ class Wall {
 
             $(".list-group-item").click(function() {
                 showScreen("#channelScreen");
-                let channel = new Channel($(this).html());
-                channel.getPosts();
+                this.channel = new Channel($(this).html());
+                this.channel.getPosts();
             })
         }
-        let communicationController = new CommunicationController();
-        communicationController.getWall(response)
+        this.communicationController.getWall(response)
     }
 }

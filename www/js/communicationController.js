@@ -6,7 +6,7 @@ class CommunicationController {
         $.ajax({
             method: 'post',
             url: this.baseUrl + "getWall.php",
-            data: JSON.stringify({sid : this.sid}),
+            data: JSON.stringify({ sid: this.sid }),
             dataType: 'json',
             success: response,
             error: function (error) {
@@ -15,11 +15,12 @@ class CommunicationController {
         });
     }
 
-    getPosts(ctitle, response) {
+    getChannel(ctitle, response) {
         let jsonData = {
-            sid : this.sid,
+            sid: this.sid,
             ctitle: ctitle
         }
+
         $.ajax({
             method: 'post',
             url: this.baseUrl + "getChannel.php",
@@ -32,9 +33,25 @@ class CommunicationController {
         });
     }
 
+    getPostImage(pid) {
+        let jsonData = {
+            sid: this.sid,
+            pid: pid
+        }
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "getPostImage.php",
+            dataType: 'json',
+            success: response,
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
+
     addPost(ctitle, type, content, response) {
         let jsonData = {
-            sid : this.sid,
+            sid: this.sid,
             ctitle: ctitle,
             type: type,
             content: content
@@ -53,7 +70,7 @@ class CommunicationController {
 
     setProfile(name, picture, response, error) {
         let jsonData = {
-            sid : this.sid,
+            sid: this.sid,
             name: name,
             picture: picture
         }
@@ -71,7 +88,7 @@ class CommunicationController {
         $.ajax({
             method: 'post',
             url: this.baseUrl + "getProfile.php",
-            data: JSON.stringify({ sid : this.sid }),
+            data: JSON.stringify({ sid: this.sid }),
             dataType: 'json',
             success: response,
             error: function (error) {
@@ -80,9 +97,24 @@ class CommunicationController {
         });
     }
 
+    getUserPicture(response, uid) {
+        let jsonData = {
+            sid: this.sid,
+            uid: uid
+        }
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "getUserPicture.php",
+            data: JSON.stringify(jsonData),
+            dataType: 'json',
+            success: response,
+            error: error
+        });
+    }
+
     addChannel(ctitle, response, error) {
         let jsonData = {
-            sid : this.sid,
+            sid: this.sid,
             ctitle: ctitle
         }
         $.ajax({
@@ -94,4 +126,5 @@ class CommunicationController {
             error: error
         });
     }
+
 }
