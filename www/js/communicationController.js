@@ -102,13 +102,16 @@ class CommunicationController {
             sid: this.sid,
             uid: uid
         }
+        console.log("CommContr " + uid)
         $.ajax({
             method: 'post',
             url: this.baseUrl + "getUserPicture.php",
             data: JSON.stringify(jsonData),
             dataType: 'json',
             success: response,
-            error: error
+            error: function (error) {
+                console.error(error);
+            }
         });
     }
 

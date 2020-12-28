@@ -32,7 +32,13 @@ function showScreen(id) {
     $(id).show()
     if (id == "#channelScreen") {
         $("#newPostDiv").show()
+        $("#backNavA").show()
+        $("#backNavA").click(function() {
+            showScreen("#wallScreen");
+        })
     } else {
+        $("#screenTitle").html("Accordo")
         $("#newPostDiv").hide()
+        $("#backNavA").hide()
     }
 }

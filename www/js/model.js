@@ -48,7 +48,7 @@ class Model {
         this._posts.push(post);
     }
 
-    setUsersFromDB() {
+    setUsersFromDB(dataReceivedCallback) {
         this.db = window.sqlitePlugin.openDatabase({
             name: "accordo.db",
             location: "default"
@@ -56,14 +56,16 @@ class Model {
 
         let getUsersQuery = 'SELECT * FROM ProfilePictures'
         let selectSuccess = function (result) {
-            len = result.length;
-            for (i = 0; i < len; i++) {
-                _users.push(result.rows.item(i));
+            let len = result.rows.length;
+            for (let i = 0; i < len; i++) {
+                this._users.push(result.rows.item(i));
+
             }
-            console.log("utenti caricati dal DB nel model")
+            console.log(len + " utenti caricati dal DB nel model")
+            dataReceivedCallback()
         }
-        let selectError = function (error) { console.error("errore nella SELECT " + error.message); }
-        this.db.executeSql(getUsersQuery, [], selectSuccess, selectError);
+        let selectError = function (error) { console.error("errore nella SELECT: " + error.message); }
+        this.db.executeSql(getUsersQuery, [], selectSuccess.bind(this), selectError);
     }
 
     //ricerca per nome
@@ -85,17 +87,31 @@ class Model {
         return undefined;
     }
 
-    updateUser(response) {
-        this._users[this.indexOf(response.uid)] = response;
+    updateUser(user) {
+        this._users[this.indexOf(response.uid)] = user;
         
         this.db = window.sqlitePlugin.openDatabase({
             name: "accordo.db",
             location: "default"
         });
 
-        let getUsersQuery = 'UPDATE ProfilePictures SET pversion = ' + response.pversion + ', picture = ' + response.picture + ' WHERE uid = ' + response.uid;
-        let updateSuccess = function (result) { console.log("utenti aggiornati") }
-        let updateError = function (error) { console.error("errore nell'aggiornamento'" + error.message); }
+        let updateUserQuery = 'UPDATE ProfilePictures SET pversion = ' + user.pversion + ', picture = ' + user.picture + ' WHERE uid = ' + user.uid;
+        let updateSuccess = function (result) { console.log("utente aggiornato") }
+        let updateError = function (error) { console.error("errore nell'aggiornamento: " + error.message); }
         this.db.executeSql(getUsersQuery, [], updateSuccess, updateError);
+    }
+
+    addUser(user) {
+        this._users.push(user)
+
+        this.db = window.sqlitePlugin.openDatabase({
+            name: "accordo.db",
+            location: "default"
+        });
+
+        let insertUserQuery = 'INSERT INTO ProfilePictures(pversion, picture, uid) VALUES ("' + user.pversion + '", "' + user.picture + '", "' + user.uid + '")';
+        let insertSuccess = function (result) { console.log("utente inserito") }
+        let insertError = function (error) { console.error("errore nell'inserimento: " + error.message); }
+        this.db.executeSql(insertUserQuery, [], insertSuccess, insertError);
     }
 }
