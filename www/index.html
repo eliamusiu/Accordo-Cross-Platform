@@ -23,8 +23,8 @@
     <meta charset="utf-8">
     <!-- <meta http-equiv="Content-Security-Policy"
         content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
-    <meta http-equiv="Content-Security-Policy"
-        content="default-src *; img-src  'self' https://ewserver.di.unimi.it/mobicomp/accordo/getPostImage.php data:; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src *; img-src  'self' https://ewserver.di.unimi.it/mobicomp/accordo/getPostImage.php data:; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+    />
     <meta name="format-detection" content="telephone=no">
     <meta name="msapplication-tap-highlight" content="no">
     <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -63,9 +63,7 @@
                 <!-- Profilo -->
                 <li class="nav-item dropdown">
                     <div class="dropdown show">
-                        <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button"
-                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user mr-2"></i>
                         </a>
 
@@ -85,6 +83,10 @@
             </ul>
         </div>
     </nav>
+
+    <div id="Fullscreen">
+        <img src="" alt="" />
+    </div>
 
     <!-- WALL SCREEN -->
     <div class="container screen" id="wallScreen">
@@ -127,19 +129,16 @@
 
                 <!-- Bottone allega -->
                 <div class="dropdown show col-2 px-2">
-                    <a class="btn btn-secondary btn-block" id="attachButton" href="#" role="button"
-                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <a class="btn btn-secondary btn-block" id="attachButton" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="fas fa-paperclip"></i>
                     </a>
 
                     <div class="dropdown-menu w-20" aria-labelledby="dropdownMenuLink">
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-image"></i>
-                            Immagine
+                            <i class="fas fa-image"></i> Immagine
                         </a>
                         <a class="dropdown-item" href="#">
-                            <i class="fas fa-map-marker-alt"></i>
-                            Posizione
+                            <i class="fas fa-map-marker-alt"></i> Posizione
                         </a>
                     </div>
                 </div>
@@ -153,8 +152,7 @@
     </div>
 
     <!-- Modal aggiunta canale -->
-    <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal"
-        aria-hidden="true">
+    <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

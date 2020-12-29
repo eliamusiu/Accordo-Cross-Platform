@@ -102,7 +102,6 @@ class CommunicationController {
             sid: this.sid,
             uid: uid
         }
-        console.log("CommContr " + uid)
         $.ajax({
             method: 'post',
             url: this.baseUrl + "getUserPicture.php",
@@ -130,4 +129,20 @@ class CommunicationController {
         });
     }
 
+    getPostImage(response, pid) {
+        let jsonData = {
+            sid: this.sid,
+            pid: pid
+        }
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "getPostImage.php",
+            data: JSON.stringify(jsonData),
+            dataType: 'json',
+            success: response,
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
 }
