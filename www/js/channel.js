@@ -6,9 +6,9 @@ class Channel {
     constructor(ctitle) {
         this.ctitle = ctitle
         $("#screenTitle").html(ctitle)
-        $("#sendButton").click(function() {
+        $("#sendButton").click(function () {
             this.communicationController = new CommunicationController()
-            let response = function(result) {
+            let response = function (result) {
                 $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
             }
             this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
@@ -21,7 +21,7 @@ class Channel {
      */
     getPosts() {
         this.communicationController = new CommunicationController()
-        let response = function(result) {
+        let response = function (result) {
             this._imagePosts = new Array()
             for (let i = 0; i < result.posts.length; i++) {
 
@@ -46,15 +46,19 @@ class Channel {
     }
 
     fullScreenImage() {
-        $('#Fullscreen').css('height', $(document).outerWidth() + 'px');
+        //$('#Fullscreen').css('height', $(document).outerWidth() + 'px'); 
         //for when you click on an image
-        $('.post-image').click(function() {
+        $('.image-post').click(function () {
             var src = $(this).attr('src'); //get the source attribute of the clicked image
             $('#Fullscreen img').attr('src', src); //assign it to the tag for your fullscreen div
-            $('#Fullscreen').fadeIn();
+            $('#Fullscreen').fadeIn(200);
+            $('.navbar').fadeOut(200);
+            $('#newPostDiv').fadeOut(200);            
         });
-        $('#Fullscreen').click(function() {
-            $(this).fadeOut(); //this will hide the fullscreen div if you click away from the image. 
+        $('#Fullscreen').click(function () {
+            $(this).fadeOut(200); //this will hide the fullscreen div if you click away from the image. 
+            $('.navbar').fadeIn(200);
+            $('#newPostDiv').fadeIn(200);
         });
     }
 
@@ -70,14 +74,14 @@ class Channel {
         })
 
         let createUserTableQuery = 'CREATE TABLE IF NOT EXISTS ProfilePictures(uid PRIMARY KEY, pversion, picture)';
-        let createSuccess = function() {
+        let createSuccess = function () {
             console.log("Tabella User creata/aperta")
-            let dataReceivedCallback = function() { // Verrà richiamata una volta caricate le immagini dal DB nel model
+            let dataReceivedCallback = function () { // Verrà richiamata una volta caricate le immagini dal DB nel model
                 this.checkMissingProfilePictures(); // Controlla le immagini mancanti o non aggiornate
             }
             Model.getInstance().setUsersFromDB(dataReceivedCallback.bind(this)); // Carica le immagini profilo dal DB nel model
         }
-        let createError = function(error) {
+        let createError = function (error) {
             console.error("Errore nella creazione/apertura della tabella " + error.message);
         }
         this.db.executeSql(createUserTableQuery, [], createSuccess.bind(this), createError);
@@ -116,7 +120,7 @@ class Channel {
                 profilePicToRequest.push(usersInChannel[i].uid);
             } else {
                 console.log("Immagine profilo caricata dal DB")
-                $(".profile-picture").each(function() {
+                $(".profile-picture").each(function () {
                     if ($(this).data("uid") == usersInChannel[i].uid) {
                         let picture = Model.getInstance().searchUser(usersInChannel[i].uid).picture
                         $(this).attr("src", "data:image/jpeg;base64," + picture)
@@ -136,29 +140,29 @@ class Channel {
      * @param {*} profilePicToRequest 
      */
     getMissingPictures(profilePicToRequest) {
-            this.communicationController = new CommunicationController();
+        this.communicationController = new CommunicationController();
 
-            for (let i = 0; i < profilePicToRequest.length; i++) {
-                var postAuthor = Model.getInstance().searchUser(profilePicToRequest[i]);
+        for (let i = 0; i < profilePicToRequest.length; i++) {
+            var postAuthor = Model.getInstance().searchUser(profilePicToRequest[i]);
 
-                let response = function(result) {
-                    if (postAuthor != undefined) {
-                        // Aggiorna l'untente
-                        Model.getInstance().updateUser(result);
-                    } else {
-                        // Inserisce l'utente
-                        Model.getInstance().addUser(result);
-                    }
-                    $(".profile-picture").each(function() {
-                        if ($(this).data("uid") == profilePicToRequest[i]) {
-                            $(this).attr("src", "data:image/jpeg;base64," + result.picture)
-                        }
-                    });
+            let response = function (result) {
+                if (postAuthor != undefined) {
+                    // Aggiorna l'untente
+                    Model.getInstance().updateUser(result);
+                } else {
+                    // Inserisce l'utente
+                    Model.getInstance().addUser(result);
                 }
-                this.communicationController.getUserPicture(response.bind(this), profilePicToRequest[i]);
+                $(".profile-picture").each(function () {
+                    if ($(this).data("uid") == profilePicToRequest[i]) {
+                        $(this).attr("src", "data:image/jpeg;base64," + result.picture)
+                    }
+                });
             }
+            this.communicationController.getUserPicture(response.bind(this), profilePicToRequest[i]);
         }
-        //#endregion
+    }
+    //#endregion
 
     //#region Images
     /**
@@ -172,14 +176,14 @@ class Channel {
         })
 
         let createImagesTableQuery = 'CREATE TABLE IF NOT EXISTS Images(pid PRIMARY KEY, content)';
-        let createSuccess = function() {
+        let createSuccess = function () {
             console.log("Tabella Images creata/aperta")
-            let dataReceivedCallback = function() { // Verrà richiamata una volta caricate le immagini dal DB nel model
+            let dataReceivedCallback = function () { // Verrà richiamata una volta caricate le immagini dal DB nel model
                 this.checkMissingImages(); // Controlla le immagini mancanti o non aggiornate
             }
             Model.getInstance().setImagesFromDB(dataReceivedCallback.bind(this)); // Carica le immagini profilo dal DB nel model
         }
-        let createError = function(error) {
+        let createError = function (error) {
             console.error("Errore nella creazione/apertura della tabella " + error.message);
         }
         this.db.executeSql(createImagesTableQuery, [], createSuccess.bind(this), createError);
@@ -200,7 +204,7 @@ class Channel {
                 imagesToRequest.push(imagePosts[i].pid);
             } else {
                 console.log("Immagine del post caricata dal DB")
-                $(".image-post").each(function() {
+                $(".image-post").each(function () {
                     if ($(this).data("pid") == imagePosts[i].pid) {
                         let image = Model.getInstance().searchPost(imagePosts[i].pid).content
                         $(this).attr("src", "data:image/jpeg;base64," + image)
@@ -220,20 +224,20 @@ class Channel {
      * @param {*} imagesToRequest 
      */
     getMissingImages(imagesToRequest) {
-            this.communicationController = new CommunicationController();
+        this.communicationController = new CommunicationController();
 
-            for (let i = 0; i < imagesToRequest.length; i++) {
+        for (let i = 0; i < imagesToRequest.length; i++) {
 
-                let response = function(result) {
-                    Model.getInstance().addImagePost(result)
-                    $(".image-post").each(function() {
-                        if ($(this).data("pid") == imagesToRequest[i]) {
-                            $(this).attr("src", "data:image/jpeg;base64," + result.content)
-                        }
-                    });
-                }
-                this.communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
+            let response = function (result) {
+                Model.getInstance().addImagePost(result)
+                $(".image-post").each(function () {
+                    if ($(this).data("pid") == imagesToRequest[i]) {
+                        $(this).attr("src", "data:image/jpeg;base64," + result.content)
+                    }
+                });
             }
+            this.communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
         }
-        //#endregion
+    }
+    //#endregion
 }

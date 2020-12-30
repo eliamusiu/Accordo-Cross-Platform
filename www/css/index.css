@@ -195,19 +195,23 @@ h1 {
 
 #Fullscreen {
     width: 100%;
-    display: none;
+    display: flex;
     position: fixed;
+    justify-content: center;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
     /* I made a 50% opacity black tile background for this 
-     div so it would seem more... modal-y*/
-    background: transparent url('../Images/bgTile_black50.png') repeat;
+    div so it would seem more... modal-y*/
+    background: rgba(0, 0, 0, 0.527);
 }
 
 #Fullscreen img {
     display: block;
-    height: 100%;
-    margin: 0 auto;
+    object-fit: cover;
+    /* width: auto; */
+    margin: auto;
+    width: auto;
+    height: 80%;
 }

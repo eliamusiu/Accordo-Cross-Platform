@@ -23,6 +23,7 @@ document.addEventListener('deviceready', onDeviceReady, false)
 
 function onDeviceReady() {
     showScreen("#wallScreen")
+    $('#Fullscreen').hide();
     let wall = new Wall()
     wall.getWall()
 }
