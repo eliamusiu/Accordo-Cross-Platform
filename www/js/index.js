@@ -20,26 +20,41 @@
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
+var previousScreen
+var ctitle
 
 function onDeviceReady() {
-    showScreen("#wallScreen")
     $('#Fullscreen').hide();
+    showScreen("#wallScreen")
     let wall = new Wall()
     wall.getWall()
+    document.addEventListener("backbutton", onBackKeyDown, false);
+    function onBackKeyDown(e) {
+        //e.preventDefault();
+        showScreen(previousScreen);
+    }
+    $("#backNavA").click(function () {
+        showScreen(previousScreen);
+    })
 }
 
 function showScreen(id) {
     $(".screen").hide()
     $(id).show()
-    if (id == "#channelScreen") {
-        $("#newPostDiv").show()
-        $("#backNavA").show()
-        $("#backNavA").click(function() {
-            showScreen("#wallScreen");
-        })
-    } else {
+    if (id == "#wallScreen") {
         $("#screenTitle").html("Accordo")
         $("#newPostDiv").hide()
         $("#backNavA").hide()
+        $("#navbarButtons").show()
+    } else if (id == "#channelScreen") {
+        $("#postsList").html("")
+        $("#screenTitle").html(ctitle)
+        $("#newPostDiv").show()
+        $("#backNavA").show()
+        $("#navbarButtons").hide()
+    } else if(id = "#sendImageScreen") {
+        $("#screenTitle").html("Allega immagine")
+        $("#newPostDiv").hide()
+        $("#navbarButtons").hide()
     }
 }

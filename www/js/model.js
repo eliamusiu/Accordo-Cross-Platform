@@ -83,6 +83,10 @@ class Model {
         this._posts.push(post);
     }
 
+    clearPosts() {
+        this._posts.length = 0
+    }
+
     /**
      * Ricerca post per pid
      * @param {*} pid 

@@ -7,6 +7,7 @@ class Wall {
         $("#addNewChannelButton").click(this.addChannel)
         this.communicationController = new CommunicationController();
         this.getProfile()
+        previousScreen = "#wallScreen"
     }
 
     setProfile() {
@@ -55,7 +56,6 @@ class Wall {
             }
 
             $(".list-group-item").click(function() {
-                showScreen("#channelScreen");
                 this.channel = new Channel($(this).html());
                 this.channel.getPosts();
             })

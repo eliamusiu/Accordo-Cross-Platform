@@ -37,6 +37,7 @@
     <script src="js/channel.js"></script>
     <script src="js/model.js"></script>
     <script src="js/user.js"></script>
+    <script src="js/sendImage.js"></script>
     <title>Accordo</title>
 </head>
 
@@ -52,8 +53,8 @@
                     </a>
                 </li>
             </ul>
-            <a class="navbar-brand align-middle" id="screenTitle" href="#">Accordo</a>
-            <ul class="navbar-nav ml-auto">
+            <a class="navbar-brand align-middle mr-auto" id="screenTitle" href="#">Accordo</a>
+            <ul class="navbar-nav ml-auto" id="navbarButtons">
                 <!-- Nuovo canale -->
                 <li class="nav-item">
                     <a class="nav-link" id="newChannelNavA" data-toggle="modal" data-target="#newChannelModal" href="#">
@@ -134,10 +135,10 @@
                     </a>
 
                     <div class="dropdown-menu w-20" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" id="attachImage">
                             <i class="fas fa-image"></i> Immagine
                         </a>
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="#" id="attachLocation">
                             <i class="fas fa-map-marker-alt"></i> Posizione
                         </a>
                     </div>
@@ -148,6 +149,14 @@
                     <button class="btn btn-primary btn-block" id="sendButton"><i class="fas fa-paper-plane"></i></button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- SENDIMAGE SCREEN -->
+    <div class="container screen" id="sendImageScreen">
+        <img src="" alt="" id="imageToSend">
+        <div class="text-right">
+            <button class="btn btn-primary mt-2 ml-2" id="sendImageButton" >Invia immagine</button>
         </div>
     </div>
 

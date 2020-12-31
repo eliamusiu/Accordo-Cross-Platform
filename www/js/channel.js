@@ -1,17 +1,41 @@
 class Channel {
     communicationController
-    ctitle
     db
 
-    constructor(ctitle) {
-        this.ctitle = ctitle
-        $("#screenTitle").html(ctitle)
+    constructor(ctitlePar) {
+        ctitle = ctitlePar
+
+        showScreen("#channelScreen");
+        previousScreen = "#wallScreen"
+
+        // Invio post testo
         $("#sendButton").click(function () {
             this.communicationController = new CommunicationController()
             let response = function (result) {
                 $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
             }
             this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
+        })
+        // Apertura picker immagine per invio immagine
+        $("#attachImage").off("click")
+        $("#attachImage").click(function () {
+            navigator.camera.getPicture(
+                function onSuccess(imageData) {
+                    new SendImage(imageData)
+                },
+                function onError(message) {
+                    console.log(message);
+                },
+                {
+                    quality: 50,
+                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                    allowEdit: true,
+                    destinationType: Camera.DestinationType.DATA_URL
+                });
+        })
+        // Apertura mappa per invio posizione
+        $("#attachLocation").click(function () {
+
         })
     }
 
@@ -22,6 +46,9 @@ class Channel {
     getPosts() {
         this.communicationController = new CommunicationController()
         let response = function (result) {
+            // Rimozione dei post precedenti sia dal model che dall'html
+            Model.getInstance().clearPosts()
+
             this._imagePosts = new Array()
             for (let i = 0; i < result.posts.length; i++) {
 
@@ -42,24 +69,34 @@ class Channel {
             this.openProfilePicturesDataBase()
             this.openImagesDataBase()
         }
-        this.communicationController.getChannel(this.ctitle, response.bind(this))
+        this.communicationController.getChannel(ctitle, response.bind(this))
     }
 
     fullScreenImage() {
-        //$('#Fullscreen').css('height', $(document).outerWidth() + 'px'); 
-        //for when you click on an image
+        // Mostra l'immagine in fullscreen al click
         $('.image-post').click(function () {
-            var src = $(this).attr('src'); //get the source attribute of the clicked image
-            $('#Fullscreen img').attr('src', src); //assign it to the tag for your fullscreen div
+            var src = $(this).attr('src');
+            $('#Fullscreen img').attr('src', src);
             $('#Fullscreen').fadeIn(200);
             $('.navbar').fadeOut(200);
-            $('#newPostDiv').fadeOut(200);            
+            $('#newPostDiv').fadeOut(200);
+            previousScreen = "#channelScreen"
         });
+        // Toglie l'immagine al click su di essa quando è aperta in fullscreen
         $('#Fullscreen').click(function () {
-            $(this).fadeOut(200); //this will hide the fullscreen div if you click away from the image. 
+            $(this).fadeOut(200);
             $('.navbar').fadeIn(200);
             $('#newPostDiv').fadeIn(200);
+            previousScreen = "#wallScreen"
         });
+        // Toglie l'immagine quando si preme il tasto back
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        function onBackKeyDown(e) {
+            $("#Fullscreen").fadeOut(200);
+            $('.navbar').fadeIn(200);
+            $('#newPostDiv').fadeIn(200);
+            previousScreen = "#wallScreen"
+        }
     }
 
     //#region Profile Pictures
@@ -170,10 +207,10 @@ class Channel {
      * chiama checkMissingProfilePictures()
      */
     openImagesDataBase() {
-        this.db = window.sqlitePlugin.openDatabase({
+        /*this.db = window.sqlitePlugin.openDatabase({
             name: "accordo.db",
             location: "default"
-        })
+        })*/
 
         let createImagesTableQuery = 'CREATE TABLE IF NOT EXISTS Images(pid PRIMARY KEY, content)';
         let createSuccess = function () {
@@ -202,6 +239,7 @@ class Channel {
         for (let i = 0; i < imagePosts.length; i++) {
             if (imagePosts[i].content == undefined) {
                 imagesToRequest.push(imagePosts[i].pid);
+                console.log("Immagine da scaricare dalla rete")
             } else {
                 console.log("Immagine del post caricata dal DB")
                 $(".image-post").each(function () {
