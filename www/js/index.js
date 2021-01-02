@@ -52,9 +52,12 @@ function showScreen(id) {
         $("#newPostDiv").show()
         $("#backNavA").show()
         $("#navbarButtons").hide()
-    } else if(id = "#sendImageScreen") {
+    } else if(id == "#sendImageScreen") {
         $("#screenTitle").html("Allega immagine")
         $("#newPostDiv").hide()
         $("#navbarButtons").hide()
+    } else if(id == "#mapScreen") {
+        $("#newPostDiv").hide()
+        $("#screenTitle").html("Mappa")
     }
 }

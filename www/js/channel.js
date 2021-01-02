@@ -68,6 +68,13 @@ class Channel {
             this.fullScreenImage()
             this.openProfilePicturesDataBase()
             this.openImagesDataBase()
+            // Apertura mappa per i post di tipo posizione
+            $(".locationButton").click(function () {
+                console.log("click")
+                let postIndex = $(".post").index($(this).parent());
+                let map = new Map();
+                map.setPostLocation(result.posts[postIndex].lat, result.posts[postIndex].lon);
+            });
         }
         this.communicationController.getChannel(ctitle, response.bind(this))
     }
