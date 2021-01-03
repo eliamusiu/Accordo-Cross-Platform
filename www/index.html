@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;"> -->
+    <meta http-equiv="Content-Security-Policy"
+        content="child-src blob: ; img-src  'self' https://ewserver.di.unimi.it/mobicomp/accordo/getPostImage.php data:; style-src 'self' http://* 'unsafe-inline'; script-src 'self' 'unsafe-eval;'" />
+    <!--stringa meta pre-mapbox-->
+    <!-- <meta http-equiv="Content-Security-Policy"
+        content="default-src *; img-src  'self' https://ewserver.di.unimi.it/mobicomp/accordo/getPostImage.php data:; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" /> -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
+    <meta name="color-scheme" content="light dark">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="lib/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/all.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.0.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="js/communicationController.js"></script>
+    <script src="js/wall.js"></script>
+    <script src="js/channel.js"></script>
+    <script src="js/model.js"></script>
+    <script src="js/user.js"></script>
+    <script src="js/sendImage.js"></script>
+    <script src="js/map.js"></script>
+    <title>Accordo</title>
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
+        <div class="container">
+            <ul class="navbar-nav">
+                <!-- Nuovo canale -->
+                <li class="nav-item">
+                    <a class="nav-link" id="backNavA" data-toggle="modal" href="#">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                    </a>
+                </li>
+            </ul>
+            <a class="navbar-brand align-middle mr-auto" id="screenTitle" href="#">Accordo</a>
+            <ul class="navbar-nav ml-auto" id="navbarButtons">
+                <!-- Nuovo canale -->
+                <li class="nav-item">
+                    <a class="nav-link" id="newChannelNavA" data-toggle="modal" data-target="#newChannelModal" href="#">
+                        <i class="fas fa-plus mr-2"></i>
+                    </a>
+                </li>
+                <!-- Profilo -->
+                <li class="nav-item dropdown">
+                    <div class="dropdown show">
+                        <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button"
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-user mr-2"></i>
+                        </a>
+
+                        <div class="dropdown-menu dropdown-menu-right" id="profileDropdownDiv"
+                            aria-labelledby="dropdownMenuLink">
+                            <h4>Modifica profilo</h4>
+
+                            <img id="editProfilePic" />
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
+                            </div>
+
+                            <button type="button" class="btn btn-primary" id="saveProfileChanges">Salva</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div id="Fullscreen">
+        <img src="" alt="" />
+    </div>
+
+    <!-- WALL SCREEN -->
+    <div class="container screen" id="wallScreen">
+        <div role="alert" id="wallAlert">
+        </div>
+        <ul class="list-group" id="channelsList">
+            <!-- lista dei canali -->
+        </ul>
+    </div>
+
+    <!-- CHANNEL SCREEN -->
+    <div class="container screen" id="channelScreen">
+        <div id="postsList">
+            <!-- lista dei post -->
+            <!-- Template post
+            <div class='post post-text'>
+                <div class='authorDiv'>
+                    <img/>
+                    <p class='authorP'></p>
+                </div>
+                <p class='content'></p>
+            </div>
+
+            <div class='post post-location'>
+                <div class='authorDiv'>
+                    <img/>
+                    <p class='authorP'></p>
+                </div>
+                <button class='locationButton btn btn-secondary'></p>
+            </div>
+            -->
+        </div>
+
+        <!-- Invio post -->
+        <div class="container fixed-bottom p-2" id="newPostDiv">
+            <div class="row no-gutters">
+                <div class="col-8">
+                    <input type="text" class="form-control" id="postInputText" placeholder="Scrivi un post..." />
+                </div>
+
+                <!-- Bottone allega -->
+                <div class="dropdown show col-2 px-2">
+                    <a class="btn btn-secondary btn-block" id="attachButton" href="#" role="button"
+                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-paperclip"></i>
+                    </a>
+
+                    <div class="dropdown-menu w-20" aria-labelledby="dropdownMenuLink">
+                        <a class="dropdown-item" href="#" id="attachImage">
+                            <i class="fas fa-image"></i> Immagine
+                        </a>
+                        <a class="dropdown-item" href="#" id="attachLocation">
+                            <i class="fas fa-map-marker-alt"></i> Posizione
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Bottone invia -->
+                <div class="col-2">
+                    <button class="btn btn-primary btn-block" id="sendButton"><i
+                            class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--MAP SCREEN-->
+    <div id="mapScreen">
+
+    </div>
+
+    <!-- SENDIMAGE SCREEN -->
+    <div class="container screen" id="sendImageScreen">
+        <img src="" alt="" id="imageToSend">
+        <div class="text-right">
+            <button class="btn btn-primary mt-2 ml-2" id="sendImageButton">Invia immagine</button>
+        </div>
+    </div>
+
+    <!-- Modal aggiunta canale -->
+    <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuovo canale</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="ctitleInput" placeholder="Nome canale">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+                    <button type="button" class="btn btn-primary" id="addNewChannelButton" data-dismiss="modal">
+                        Aggiungi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="lib/popper.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap.min.js"></script>
+    <script src="lib/all.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+</html>
