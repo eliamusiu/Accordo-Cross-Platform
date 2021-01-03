@@ -11,6 +11,7 @@ class Map {
     }
 
     setPostLocation(lat, lon) {
+        // Prova
         var map = new mapboxgl.Map({
             accessToken: 'pk.eyJ1IjoiYW5kcmVsaW8iLCJhIjoiY2tmbnBqeXJjMGZnNDJ5bXExNTIwODI3MSJ9.EvDDudGu2KRCZfr-3tSObQ',
             container: 'mapScreen',
