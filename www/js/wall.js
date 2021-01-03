@@ -20,6 +20,7 @@ class Wall {
             $("#wallAlert").attr("class", "alert alert-danger")
             $("#wallAlert").html("Errore nell'aggiornamento delle informazioni")
         }
+        //TODO: fare aggiunta immagine profilo
         this.communicationController.setProfile($("#editUsername").val(), null, response, error)
     }
 

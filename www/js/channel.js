@@ -5,38 +5,44 @@ class Channel {
     constructor(ctitlePar) {
         ctitle = ctitlePar
 
-        showScreen("#channelScreen");
-        previousScreen = "#wallScreen"
+        $("#postsList").html("")
+        showScreen("#channelScreen")
 
         // Invio post testo
-        $("#sendButton").click(function () {
-            this.communicationController = new CommunicationController()
-            let response = function (result) {
-                $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
-            }
-            this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
-        })
+        $("#sendButton").click(this.sendPost)
         // Apertura picker immagine per invio immagine
         $("#attachImage").off("click")
-        $("#attachImage").click(function () {
-            navigator.camera.getPicture(
-                function onSuccess(imageData) {
-                    new SendImage(imageData)
-                },
-                function onError(message) {
-                    console.log(message);
-                },
-                {
-                    quality: 50,
-                    sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                    allowEdit: true,
-                    destinationType: Camera.DestinationType.DATA_URL
-                });
-        })
+        $("#attachImage").click(this.attachImage)
         // Apertura mappa per invio posizione
-        $("#attachLocation").click(function () {
+        $("#attachLocation").click(this.attachLocation)
+    }
 
-        })
+    sendPost() {
+        this.communicationController = new CommunicationController()
+        let response = function (result) {
+            $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
+        }
+        this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
+    }
+
+    attachImage() {
+        navigator.camera.getPicture(
+            function onSuccess(imageData) {
+                new SendImage(imageData)
+            },
+            function onError(message) {
+                console.log(message);
+            },
+            {
+                quality: 50,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
+    }
+
+    attachLocation() {
+
     }
 
     /**
@@ -94,7 +100,6 @@ class Channel {
             $(this).fadeOut(200);
             $('.navbar').fadeIn(200);
             $('#newPostDiv').fadeIn(200);
-            previousScreen = "#wallScreen"
         });
         // Toglie l'immagine quando si preme il tasto back
         document.addEventListener("backbutton", onBackKeyDown, false);
@@ -102,7 +107,6 @@ class Channel {
             $("#Fullscreen").fadeOut(200);
             $('.navbar').fadeIn(200);
             $('#newPostDiv').fadeIn(200);
-            previousScreen = "#wallScreen"
         }
     }
 

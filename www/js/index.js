@@ -29,8 +29,7 @@ function onDeviceReady() {
     let wall = new Wall()
     wall.getWall()
     document.addEventListener("backbutton", onBackKeyDown, false);
-    function onBackKeyDown(e) {
-        //e.preventDefault();
+    function onBackKeyDown() {
         showScreen(previousScreen);
     }
     $("#backNavA").click(function () {
@@ -42,16 +41,17 @@ function showScreen(id) {
     $(".screen").hide()
     $(id).show()
     if (id == "#wallScreen") {
+        //TODO: tornare alla posizione del canale cliccato quando si torna indietro dal canale
         $("#screenTitle").html("Accordo")
         $("#newPostDiv").hide()
         $("#backNavA").hide()
         $("#navbarButtons").show()
     } else if (id == "#channelScreen") {
-        $("#postsList").html("")
         $("#screenTitle").html(ctitle)
         $("#newPostDiv").show()
         $("#backNavA").show()
         $("#navbarButtons").hide()
+        previousScreen = "#wallScreen"
     } else if(id == "#sendImageScreen") {
         $("#screenTitle").html("Allega immagine")
         $("#newPostDiv").hide()
