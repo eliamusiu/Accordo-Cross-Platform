@@ -8,6 +8,8 @@ class Channel {
         $("#postsList").html("")
         showScreen("#channelScreen")
 
+        console.log(" ---- CANALE " + ctitle)
+
         // Invio post testo
         $("#sendButton").click(this.sendPost)
         // Apertura picker immagine per invio immagine
@@ -56,19 +58,20 @@ class Channel {
             Model.getInstance().clearPosts()
 
             this._imagePosts = new Array()
-            for (let i = 0; i < result.posts.length; i++) {
+            let posts = result.posts.reverse()
+            for (let i = 0; i < posts.length; i++) {
 
-                Model.getInstance().addPost(result.posts[i])
+                Model.getInstance().addPost(posts[i])
 
-                if (result.posts[i].type == "t") {
-                    $("#postsList").append("<div class='post post-text' data-pid='" + result.posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + result.posts[i].pversion + "' data-uid='" + result.posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + result.posts[i].name + "</span> </div> <p class='content'>" + result.posts[i].content + "</p></div>")
-                } else if (result.posts[i].type == "l") {
-                    $("#postsList").append("<div class='post post-location' data-pid='" + result.posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + result.posts[i].pversion + "' data-uid='" + result.posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + result.posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</div>")
-                } else if (result.posts[i].type == "i") {
-                    $("#postsList").append("<div class='post post-image' data-pid='" + result.posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + result.posts[i].pversion + "' data-uid='" + result.posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + result.posts[i].name + "</span> </div> <img data-enlargeable class='image-post' data-pid='" + result.posts[i].pid + "'></div>")
+                if (posts[i].type == "t") {
+                    $("#postsList").append("<div class='post post-text' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
+                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <p class='content'>" + posts[i].content + "</p></div>")
+                } else if (posts[i].type == "l") {
+                    $("#postsList").append("<div class='post post-location' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
+                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</div>")
+                } else if (posts[i].type == "i") {
+                    $("#postsList").append("<div class='post post-image' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
+                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <img data-enlargeable class='image-post' data-pid='" + posts[i].pid + "'></div>")
                 }
             }
             this.fullScreenImage()
@@ -287,6 +290,7 @@ class Channel {
             }
             this.communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
         }
+        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
     }
     //#endregion
 }

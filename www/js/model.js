@@ -166,11 +166,16 @@ class Model {
             location: "default"
         })
 
+
         let getImagesQuery = 'SELECT * FROM Images'
         let selectSuccess = function (result) {
             let len = result.rows.length;
+            console.log("set images from db " + len)
             for (let i = 0; i < len; i++) {
-                this._posts[this.indexOfPost(result.rows.item(i).pid)].content = result.rows.item(i).content
+                let postIndex = this.indexOfPost(result.rows.item(i).pid)
+                if (postIndex != undefined) {
+                    this._posts[postIndex].content = result.rows.item(i).content
+                }
             }
             console.log(len + " post immagine caricati dal DB nel model")
             dataReceivedCallback()
