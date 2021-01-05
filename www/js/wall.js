@@ -34,8 +34,27 @@ class Wall {
             Model.getInstance().actualUser = user
             this._actualUser = Model.getInstance().actualUser
             $("#editUsername").val(this._actualUser.name)
+            $("#profilePic").attr('src', "data:image/jpeg;base64," + result.picture);
+            $("#editProfilePic").click(this.pickProfilePic);
         }
         this.communicationController.getProfile(response)
+    }
+
+    pickProfilePic() {
+        //TODO: fare crop immagine per invio
+        navigator.camera.getPicture(
+            function onSuccess(imageData) {
+                new SendImage(imageData)
+            },
+            function onError(message) {
+                console.log(message);
+            },
+            {
+                quality: 50,
+                sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit: true,
+                destinationType: Camera.DestinationType.DATA_URL
+            });
     }
 
     addChannel() {
@@ -57,6 +76,7 @@ class Wall {
             }
 
             $(".list-group-item").click(function() {
+                channelPositionTop = $(this).position().top;
                 this.channel = new Channel($(this).html());
                 this.channel.getPosts();
             })

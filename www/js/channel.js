@@ -290,7 +290,7 @@ class Channel {
             }
             this.communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
         }
-        $("html, body").animate({ scrollTop: $(document).height() }, 1000);
+        $("html, body").animate({ scrollTop: $(document).height() }, 250);
     }
     //#endregion
 }

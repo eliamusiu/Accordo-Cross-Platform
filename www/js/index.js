@@ -22,6 +22,7 @@
 document.addEventListener('deviceready', onDeviceReady, false)
 var previousScreen
 var ctitle
+var channelPositionTop
 
 function onDeviceReady() {
     $('#Fullscreen').hide();
@@ -46,6 +47,12 @@ function showScreen(id) {
         $("#newPostDiv").hide()
         $("#backNavA").hide()
         $("#navbarButtons").show()
+        if (ctitle != undefined) {
+            //console.log("offset: "+$('#'+ctitle).offset().top);
+            $('html, body').animate({
+                scrollTop: channelPositionTop - 300
+            }, 0);
+        }
     } else if (id == "#channelScreen") {
         $("#screenTitle").html(ctitle)
         $("#newPostDiv").show()
