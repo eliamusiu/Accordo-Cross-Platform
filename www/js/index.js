@@ -26,9 +26,9 @@ var channelPositionTop;
 
 function onDeviceReady() {
     $('#Fullscreen').hide();
+    checkSid();
     showScreen("#wallScreen");
-    let wall = new Wall();
-    wall.getWall();
+
     document.addEventListener("backbutton", onBackKeyDown, false);
     function onBackKeyDown() {
         showScreen(previousScreen);
@@ -36,6 +36,25 @@ function onDeviceReady() {
     $("#backNavA").click(function () {
         showScreen(previousScreen);
     })
+}
+
+function checkSid() {
+    let prova = localStorage;
+    console.log(prova);
+    if (localStorage['sid']) {
+        Model.getInstance().sid = localStorage.getItem('sid');
+        let wall = new Wall();
+        wall.getWall();
+    } else {
+        let communicationController = new CommunicationController();
+        let response = function (result) {
+            Model.getInstance().sid = result.sid;
+            localStorage.setItem('sid', result.sid);
+            let wall = new Wall();
+            wall.getWall();
+        }
+        communicationController.register(response);
+    }
 }
 
 function showScreen(id) {
@@ -59,11 +78,11 @@ function showScreen(id) {
         $("#backNavA").show();
         $("#navbarButtons").hide();
         previousScreen = "#wallScreen"
-    } else if(id == "#sendImageScreen") {
+    } else if (id == "#sendImageScreen") {
         $("#screenTitle").html("Allega immagine");
         $("#newPostDiv").hide();
         $("#navbarButtons").hide();
-    } else if(id == "#mapScreen") {
+    } else if (id == "#mapScreen") {
         $("#newPostDiv").hide();
         $("#screenTitle").html("Mappa");
         previousScreen = "#channelScreen";

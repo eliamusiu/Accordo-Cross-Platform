@@ -44,7 +44,8 @@ class Channel {
     }
 
     attachLocation() {
-
+        let map = new Map();
+        map.getLocation();
     }
 
     /**
@@ -82,8 +83,8 @@ class Channel {
             $(".locationButton").click(function () {
                 console.log("click");
                 let postIndex = $(".post").index($(this).parent());
-                showScreen("#mapScreen");
-                let map = new Map(result.posts[postIndex].lat, result.posts[postIndex].lon);
+                let map = new Map();
+                map.setPostLocation(result.posts[postIndex].lat, result.posts[postIndex].lon);
             });
         }
         this.communicationController.getChannel(ctitle, response.bind(this));

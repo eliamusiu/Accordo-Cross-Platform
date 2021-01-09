@@ -3,6 +3,7 @@ class Model {
     _actualUser
     _users
     _posts
+    _sid
 
     constructor() {
         this._users = [];
@@ -14,6 +15,14 @@ class Model {
             this._instance = new Model()
         }
         return this._instance
+    }
+
+    set sid(sid) {
+        this._sid = sid;
+    }
+
+    get sid() {
+        return this._sid;
     }
 
     //#region User

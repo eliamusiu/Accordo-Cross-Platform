@@ -8,12 +8,16 @@
 //     });
 // }
 class Map {
+    latitude;
+    longitude;
 
-    constructor(lat, lon) {
+    constructor() { showScreen("#mapScreen") }
+
+    setPostLocation(lat, lon) {
         console.log(lat + " " + lon);
         mapboxgl.accessToken = "pk.eyJ1IjoiYW5kcmVsaW8iLCJhIjoiY2tmbnBqeXJjMGZnNDJ5bXExNTIwODI3MSJ9.EvDDudGu2KRCZfr-3tSObQ";
         var map = new mapboxgl.Map({
-            container: 'mapScreen',
+            container: 'map',
             center: [lon, lat],
             style: 'mapbox://styles/mapbox/streets-v11',
             zoom: 11
@@ -23,16 +27,22 @@ class Map {
             .addTo(map);
     }
 
-    // setPostLocation(lat, lon) {
-    //     // Prova
-    //     var map = new mapboxgl.Map({
-    //         accessToken: 'pk.eyJ1IjoiYW5kcmVsaW8iLCJhIjoiY2tmbnBqeXJjMGZnNDJ5bXExNTIwODI3MSJ9.EvDDudGu2KRCZfr-3tSObQ',
-    //         container: 'mapScreen',
-    //         center: [lon, lat],
-    //         style: 'mapbox://styles/mapbox/light-v10',
-    //         zoom: 11
-    //     });
-    //     console.log("");
-    //     //this.map.setCenter([lon, lat]);
-    // }
+    getLocation() {
+        function success(position) {
+            this.latitude = position.coords.latitude;
+            this.longitude = position.coords.longitude;
+            this.setPostLocation(this.latitude, this.longitude);
+        }
+
+        function error() {
+            status.textContent = 'Unable to retrieve your location';
+        }
+
+        if (!navigator.geolocation) {
+            status.textContent = 'Geolocation is not supported by your browser';
+        } else {
+            //status.textContent = 'Locating…';
+            navigator.geolocation.getCurrentPosition(success.bind(this), error);
+        }
+    }
 }

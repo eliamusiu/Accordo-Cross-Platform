@@ -1,6 +1,22 @@
 class CommunicationController {
     baseUrl = "https://ewserver.di.unimi.it/mobicomp/accordo/";
-    sid = "35vzqlT9QKUogwn6";
+    sid;
+
+    constructor() {
+        this.sid = Model.getInstance().sid;
+    }
+
+    register(response) {
+        $.ajax({
+            method: 'post',
+            url: this.baseUrl + "register.php",
+            dataType: 'json',
+            success: response,
+            error: function (error) {
+                console.error(error);
+            }
+        });
+    }
 
     getWall(response) {
         $.ajax({

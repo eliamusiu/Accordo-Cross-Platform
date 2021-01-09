@@ -254,7 +254,17 @@ body {
     height: auto;
 }
 
-#mapScreen {
+/* mappe */
+#map {
+    /*position: relative;*/
     height: 100%;
     width: 100%;
 }
+
+#map button {
+    position: absolute;
+    top: 65%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
