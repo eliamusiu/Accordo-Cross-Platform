@@ -131,6 +131,7 @@ class Model {
     }
 
     updateUser(user) {
+        //TODO: guardare questo
         this._users[this.indexOf(response.uid)] = user;
 
         this.db = window.sqlitePlugin.openDatabase({

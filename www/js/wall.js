@@ -1,6 +1,6 @@
 class Wall {  
-    channel
-    communicationController
+    channel;
+    communicationController;
 
     constructor() {
         $("#saveProfileChanges").click(this.setProfile)

@@ -20,15 +20,15 @@
 // Wait for the deviceready event before using any of Cordova's device APIs.
 // See https://cordova.apache.org/docs/en/latest/cordova/events/events.html#deviceready
 document.addEventListener('deviceready', onDeviceReady, false)
-var previousScreen
-var ctitle
-var channelPositionTop
+var previousScreen;
+var ctitle;
+var channelPositionTop;
 
 function onDeviceReady() {
     $('#Fullscreen').hide();
-    showScreen("#wallScreen")
-    let wall = new Wall()
-    wall.getWall()
+    showScreen("#wallScreen");
+    let wall = new Wall();
+    wall.getWall();
     document.addEventListener("backbutton", onBackKeyDown, false);
     function onBackKeyDown() {
         showScreen(previousScreen);
@@ -39,14 +39,14 @@ function onDeviceReady() {
 }
 
 function showScreen(id) {
-    $(".screen").hide()
-    $(id).show()
+    $(".screen").hide();
+    $(id).show();
     if (id == "#wallScreen") {
         //TODO: tornare alla posizione del canale cliccato quando si torna indietro dal canale
-        $("#screenTitle").html("Accordo")
-        $("#newPostDiv").hide()
-        $("#backNavA").hide()
-        $("#navbarButtons").show()
+        $("#screenTitle").html("Accordo");
+        $("#newPostDiv").hide();
+        $("#backNavA").hide();
+        $("#navbarButtons").show();
         if (ctitle != undefined) {
             //console.log("offset: "+$('#'+ctitle).offset().top);
             $('html, body').animate({
@@ -54,17 +54,18 @@ function showScreen(id) {
             }, 0);
         }
     } else if (id == "#channelScreen") {
-        $("#screenTitle").html(ctitle)
-        $("#newPostDiv").show()
-        $("#backNavA").show()
-        $("#navbarButtons").hide()
+        $("#screenTitle").html(ctitle);
+        $("#newPostDiv").show();
+        $("#backNavA").show();
+        $("#navbarButtons").hide();
         previousScreen = "#wallScreen"
     } else if(id == "#sendImageScreen") {
-        $("#screenTitle").html("Allega immagine")
-        $("#newPostDiv").hide()
-        $("#navbarButtons").hide()
+        $("#screenTitle").html("Allega immagine");
+        $("#newPostDiv").hide();
+        $("#navbarButtons").hide();
     } else if(id == "#mapScreen") {
-        $("#newPostDiv").hide()
-        $("#screenTitle").html("Mappa")
+        $("#newPostDiv").hide();
+        $("#screenTitle").html("Mappa");
+        previousScreen = "#channelScreen";
     }
 }

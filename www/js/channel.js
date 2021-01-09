@@ -1,6 +1,6 @@
 class Channel {
-    communicationController
-    db
+    communicationController;
+    db;
 
     constructor(ctitlePar) {
         ctitle = ctitlePar
@@ -77,15 +77,16 @@ class Channel {
             this.fullScreenImage()
             this.openProfilePicturesDataBase()
             this.openImagesDataBase()
+            
             // Apertura mappa per i post di tipo posizione
             $(".locationButton").click(function () {
-                console.log("click")
+                console.log("click");
                 let postIndex = $(".post").index($(this).parent());
-                let map = new Map();
-                map.setPostLocation(result.posts[postIndex].lat, result.posts[postIndex].lon);
+                showScreen("#mapScreen");
+                let map = new Map(result.posts[postIndex].lat, result.posts[postIndex].lon);
             });
         }
-        this.communicationController.getChannel(ctitle, response.bind(this))
+        this.communicationController.getChannel(ctitle, response.bind(this));
     }
 
     fullScreenImage() {
@@ -96,7 +97,7 @@ class Channel {
             $('#Fullscreen').fadeIn(200);
             $('.navbar').fadeOut(200);
             $('#newPostDiv').fadeOut(200);
-            previousScreen = "#channelScreen"
+            previousScreen = "#channelScreen";
         });
         // Toglie l'immagine al click su di essa quando è aperta in fullscreen
         $('#Fullscreen').click(function () {

@@ -1,6 +1,6 @@
 class CommunicationController {
-    baseUrl = "https://ewserver.di.unimi.it/mobicomp/accordo/"
-    sid = "35vzqlT9QKUogwn6"
+    baseUrl = "https://ewserver.di.unimi.it/mobicomp/accordo/";
+    sid = "35vzqlT9QKUogwn6";
 
     getWall(response) {
         $.ajax({
