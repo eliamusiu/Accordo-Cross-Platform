@@ -141,6 +141,10 @@ body {
     padding-top: 4em;
 }
 
+.screen {
+    height: 100%;
+}
+
 /* Wall Screen */
 
 #profileDropdownDiv {
@@ -205,6 +209,9 @@ body {
     height: 150px;
 }
 
+#postsList {
+    padding-bottom: 40px;
+}
 
 /* Fullscreen image */
 
@@ -254,17 +261,16 @@ body {
     height: auto;
 }
 
-/* mappe */
-#map {
-    /*position: relative;*/
+/* Map Screen */
+#mapDiv {
+    position: relative;
     height: 100%;
     width: 100%;
 }
 
-#map button {
+#sendLocationButton {
     position: absolute;
-    top: 65%;
-    transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    visibility: hidden;
+    top: 90%;
+    right: 5%;
 }
-

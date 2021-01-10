@@ -1,11 +1,9 @@
 class Wall {  
     channel;
-    communicationController;
 
     constructor() {
         $("#saveProfileChanges").click(this.setProfile)
         $("#addNewChannelButton").click(this.addChannel)
-        this.communicationController = new CommunicationController();
         this.getProfile()
         previousScreen = "#wallScreen"
     }
@@ -21,7 +19,8 @@ class Wall {
             $("#wallAlert").html("Errore nell'aggiornamento delle informazioni")
         }
         //TODO: fare aggiunta immagine profilo
-        this.communicationController.setProfile($("#editUsername").val(), null, response, error)
+        let communicationController = new CommunicationController();
+        communicationController.setProfile($("#editUsername").val(), null, response, error)
     }
 
     getProfile() {
@@ -37,7 +36,8 @@ class Wall {
             $("#profilePic").attr('src', "data:image/jpeg;base64," + result.picture);
             $("#editProfilePic").click(this.pickProfilePic);
         }
-        this.communicationController.getProfile(response)
+        let communicationController = new CommunicationController();
+        communicationController.getProfile(response)
     }
 
     pickProfilePic() {
@@ -66,7 +66,8 @@ class Wall {
             $("#wallAlert").attr("class", "alert alert-danger")
             $("#wallAlert").html("Errore nell'aggiunta del canale")
         }
-        this.communicationController.addChannel($("#ctitleInput").val(), response, error)
+        let communicationController = new CommunicationController();
+        communicationController.addChannel($("#ctitleInput").val(), response, error)
     }
 
     getWall() {
@@ -81,6 +82,7 @@ class Wall {
                 this.channel.getPosts();
             })
         }
-        this.communicationController.getWall(response)
+        let communicationController = new CommunicationController();
+        communicationController.getWall(response)
     }
 }

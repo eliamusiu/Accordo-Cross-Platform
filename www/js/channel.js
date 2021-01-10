@@ -21,7 +21,7 @@ class Channel {
 
     sendPost() {
         this.communicationController = new CommunicationController()
-        let response = function (result) {
+        let response = function () {
             $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
         }
         this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
@@ -69,7 +69,7 @@ class Channel {
                         "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <p class='content'>" + posts[i].content + "</p></div>")
                 } else if (posts[i].type == "l") {
                     $("#postsList").append("<div class='post post-location' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</div>")
+                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</button></div>")
                 } else if (posts[i].type == "i") {
                     $("#postsList").append("<div class='post post-image' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
                         "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <img data-enlargeable class='image-post' data-pid='" + posts[i].pid + "'></div>")

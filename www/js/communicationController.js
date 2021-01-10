@@ -66,22 +66,44 @@ class CommunicationController {
     }
 
     addPost(ctitle, type, content, response) {
-        let jsonData = {
-            sid: this.sid,
-            ctitle: ctitle,
-            type: type,
-            content: content
-        }
-        $.ajax({
-            method: 'post',
-            url: this.baseUrl + "addPost.php",
-            data: JSON.stringify(jsonData),
-            dataType: 'json',
-            success: response,
-            error: function (error) {
-                console.error(error);
+        if (type == 't' || type == "i") {
+            let jsonData = {
+                sid: this.sid,
+                ctitle: ctitle,
+                type: type,
+                content: content
             }
-        });
+            $.ajax({
+                method: 'post',
+                url: this.baseUrl + "addPost.php",
+                data: JSON.stringify(jsonData),
+                dataType: 'json',
+                success: response,
+                error: function (error) {
+                    console.error(error);
+                }
+            });
+        }
+    }
+
+    addPost(ctitle, type, lat, lon, response, error) {
+        if (type == 'l') {
+            let jsonData = {
+                sid: this.sid,
+                ctitle: ctitle,
+                type: type,
+                lat: lat,
+                lon: lon
+            }
+            $.ajax({
+                method: 'post',
+                url: this.baseUrl + "addPost.php",
+                data: JSON.stringify(jsonData),
+                dataType: 'json',
+                success: response,
+                error: error
+            });
+        }
     }
 
     setProfile(name, picture, response, error) {

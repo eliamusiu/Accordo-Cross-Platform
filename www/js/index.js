@@ -83,6 +83,7 @@ function showScreen(id) {
         $("#newPostDiv").hide();
         $("#navbarButtons").hide();
     } else if (id == "#mapScreen") {
+        $("#sendLocationButton").css("visibility", "hidden");
         $("#newPostDiv").hide();
         $("#screenTitle").html("Mappa");
         previousScreen = "#channelScreen";
