@@ -1,6 +1,7 @@
 class Map {
     latitude;
     longitude;
+    firstRun;
 
     constructor() {
         showScreen("#mapScreen")
@@ -42,6 +43,10 @@ class Map {
             this.setPostLocation(this.latitude, this.longitude);
         }
         function error() {
+            if (firstRun == true) { // errore dialog permessi posizione concessi
+                let options = { enableHighAccuracy: true } 
+                navigator.geolocation.getCurrentPosition(success.bind(this), error, options);
+            }
             status.textContent = 'Unable to retrieve your location';
         }
 
@@ -49,9 +54,8 @@ class Map {
             status.textContent = 'Geolocation is not supported by your browser';
         } else {
             let options = { enableHighAccuracy: true }
-            
+            this.firstRun = true; 
             navigator.geolocation.getCurrentPosition(success.bind(this), error, options);
-            
         }
     }
 }
