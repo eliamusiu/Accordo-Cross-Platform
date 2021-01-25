@@ -66,7 +66,7 @@ class CommunicationController {
     }
 
     addPost(ctitle, type, content, response) {
-        if (type == 't' || type == "i") {
+        if (type == "i" || type == "t") {
             let jsonData = {
                 sid: this.sid,
                 ctitle: ctitle,
@@ -80,13 +80,13 @@ class CommunicationController {
                 dataType: 'json',
                 success: response,
                 error: function (error) {
-                    console.error(error);
+                    console.error( "errore: " + error);
                 }
             });
         }
     }
 
-    addPost(ctitle, type, lat, lon, response, error) {
+    addLocationPost(ctitle, type, lat, lon, response, error) {
         if (type == 'l') {
             let jsonData = {
                 sid: this.sid,

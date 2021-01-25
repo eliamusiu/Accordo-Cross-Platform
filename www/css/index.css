@@ -176,6 +176,9 @@ body {
     margin: 0 !important;
 }
 
+#wallAlert {
+    display: none;
+}
 
 /* Channel Screen */
 
@@ -256,9 +259,17 @@ body {
 #sendImageScreen img {
     display: inline-block;
     object-fit: cover;
+    position: relative;
     margin: auto;
     width: 100%;
     height: auto;
+}
+
+#sendImageButton {
+    position: absolute;
+    visibility: hidden;
+    top: 90%;
+    right: 5%;
 }
 
 /* Map Screen */
