@@ -3,12 +3,9 @@ class Wall {
 
     constructor() {
         $("#saveProfileChanges").click(this.setProfile)
-<<<<<<< HEAD
         $("#addNewChannelButton").click(this.addChannel)
         $("#editProfilePic").click(this.pickProfilePic);
-=======
         $("#addNewChannelButton").click(this.addChannel.bind(this))
->>>>>>> b8495e7781cdb082f77c9d80c6c27926533c1d17
         this.getProfile()
         previousScreen = "#wallScreen"
     }
