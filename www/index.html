@@ -45,7 +45,7 @@
 
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand navbar-light bg-light fixed-top">
+    <nav class="navbar navbar-expand fixed-top">
         <div class="container">
             <ul class="navbar-nav">
                 <!-- Nuovo canale -->
@@ -58,51 +58,38 @@
             <a class="navbar-brand align-middle mr-auto" id="screenTitle" href="#">Accordo</a>
             <ul class="navbar-nav ml-auto" id="navbarButtons">
                 <!-- Nuovo canale -->
-                <li class="nav-item">
+                <li class="nav-item mr-3">
                     <a class="nav-link" id="newChannelNavA" data-toggle="modal" data-target="#newChannelModal" href="#">
                         <i class="fas fa-plus mr-2"></i>
                     </a>
                 </li>
                 <!-- Profilo -->
                 <li class="nav-item dropdown">
-                    <div class="dropdown show">
-                        <a class="nav-link dropdown-toggle" id="profileNavA" href="#" role="button"
-                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-                            aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user mr-2"></i>
-                        </a>
-
-                        <div class="dropdown-menu dropdown-menu-right" id="profileDropdownDiv"
-                            aria-labelledby="dropdownMenuLink">
-                            <h4>Modifica profilo</h4>
-
-                            <div id="profilePicDiv">
-                                <img id="profilePic" class="img-fluid" />
-                                <button class="btn btn-primary mb-5 float-right" type="button" id="editProfilePic"><i
-                                        class="fas fa-edit fa-fw"></i></button>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
-                            </div>
-
-                            <button type="button" class="btn btn-primary" id="saveProfileChanges">Salva</button>
-                        </div>
-                    </div>
+                    <a class="nav-link" id="profileNavA" data-toggle="modal" data-target="#editProfileModal" href="#">
+                        <i class="fas fa-user mr-2"></i>
+                    </a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <div id="Fullscreen">
-        <img src="" alt="" />
+        <img src="" alt="" id="fullscreenImg" />
+    </div>
+
+    <div id="splashScreen">
+        <img src="img/logo.png" alt="" id="fullscreenImg" />
     </div>
 
     <!-- WALL SCREEN -->
     <div class="container screen" id="wallScreen">
         <div role="alert" id="wallAlert">
+            <span id="wallTextAlert"></span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
-        <ul class="list-group" id="channelsList">
+        <ul class="list-group list-group-flush" id="channelsList">
             <!-- lista dei canali -->
         </ul>
     </div>
@@ -133,29 +120,31 @@
         <!-- Invio post -->
         <div class="container fixed-bottom p-2" id="newPostDiv">
             <div class="row no-gutters">
-                <div class="col-8">
-                    <input type="text" class="form-control" id="postInputText" placeholder="Scrivi un post..." />
-                </div>
+                <div class="col-10 row no-gutters" id="textAttachDiv">
+                    <input type="text" class="form-control col-10" id="postInputText" placeholder="Scrivi un post..." />
 
-                <!-- Bottone allega -->
-                <div class="dropdown show col-2 px-2">
-                    <a class="btn btn-secondary btn-block" id="attachButton" href="#" role="button"
-                        id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-paperclip"></i>
-                    </a>
+                    <!-- Bottone allega -->
+                    <div class="dropdown show col-2 px-2">
+                        <a class="btn btn-secondary btn-block" id="attachButton" href="#" role="button"
+                            id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-paperclip"></i>
+                        </a>
 
-                    <div class="dropdown-menu w-20" aria-labelledby="dropdownMenuLink">
-                        <a class="dropdown-item" href="#" id="attachImage">
-                            <i class="fas fa-image"></i> Immagine
-                        </a>
-                        <a class="dropdown-item" href="#" id="attachLocation">
-                            <i class="fas fa-map-marker-alt"></i> Posizione
-                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <button class="btn btn-secondary row no-gutters" id="attachImage">
+                                <i class="fas fa-image col-3"></i>
+                                <span class="col-9">Immagine</span>
+                            </button>
+                            <button class="btn btn-secondary row no-gutters" id="attachLocation">
+                                <i class="fas fa-map-marker-alt col-3"></i>
+                                <span class="col-9">Posizione</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Bottone invia -->
-                <div class="col-2">
+                <div class="col-2 pl-2">
                     <button class="btn btn-primary btn-block" id="sendButton">
                         <i class="fas fa-paper-plane"></i>
                     </button>
@@ -164,8 +153,10 @@
         </div>
     </div>
 
+
+
     <!--MAP SCREEN-->
-    <div class="container screen" id="mapScreen">
+    <div class="container screen p-0" id="mapScreen">
         <div id="mapDiv"></div>
         <button type="button" class="btn btn-primary" id="sendLocationButton">
             Invia Posizione
@@ -184,10 +175,10 @@
         </div>
     </div>
 
-    <!-- Modal aggiunta canale -->
+    <!-- Modal Aggiunta canale -->
     <div class="modal fade" id="newChannelModal" tabindex="-1" role="dialog" aria-labelledby="newChannelModal"
         aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Nuovo canale</h5>
@@ -206,6 +197,39 @@
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
                     <button type="button" class="btn btn-primary" id="addNewChannelButton" data-dismiss="modal">
                         Aggiungi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Profilo -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifica profilo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div id="profilePicDiv">
+                            <img id="profilePic" class="img-fluid" />
+                            <button class="btn btn-secondary mb-5 float-right" type="button" id="editProfilePic"><i
+                                    class="fas fa-edit fa-fw"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="editUsername" placeholder="Nome utente">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveProfileChanges">Salva</button>
                 </div>
             </div>
         </div>

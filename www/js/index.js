@@ -25,10 +25,10 @@ var ctitle;
 var channelPositionTop;
 
 function onDeviceReady() {
+    StatusBar.backgroundColorByHexString("#001064");
     $('#Fullscreen').hide();
     checkSid();
     showScreen("#wallScreen");
-
     document.addEventListener("backbutton", onBackKeyDown, false);
     function onBackKeyDown() {
         showScreen(previousScreen);
@@ -59,13 +59,15 @@ function checkSid() {
 
 function showScreen(id) {
     $(".screen").hide();
+    $("#newPostDiv").hide();
     $(id).show();
     if (id == "#wallScreen") {
         //TODO: tornare alla posizione del canale cliccato quando si torna indietro dal canale
         $("#screenTitle").html("Accordo");
-        $("#newPostDiv").hide();
         $("#backNavA").hide();
         $("#navbarButtons").show();
+        $('#splashScreen').fadeOut(100);
+        //$("#channelScreen").css("transform", "translateX(" + $(window).width() +"px)");
         if (ctitle != undefined) {
             //console.log("offset: "+$('#'+ctitle).offset().top);
             $('html, body').animate({
@@ -77,14 +79,13 @@ function showScreen(id) {
         $("#newPostDiv").show();
         $("#backNavA").show();
         $("#navbarButtons").hide();
+        //$("#channelScreen").css("transform", "");
         previousScreen = "#wallScreen"
     } else if (id == "#sendImageScreen") {
         $("#screenTitle").html("Allega immagine");
-        $("#newPostDiv").hide();
         $("#navbarButtons").hide();
     } else if (id == "#mapScreen") {
         $("#sendLocationButton").css("visibility", "hidden");
-        $("#newPostDiv").hide();
         $("#screenTitle").html("Mappa");
         previousScreen = "#channelScreen";
     }
