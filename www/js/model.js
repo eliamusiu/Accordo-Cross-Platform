@@ -141,14 +141,14 @@ class Model {
 
     updateUser(user) {
         //TODO: guardare questo
-        this._users[this.indexOf(response.uid)] = user;
+        this._users[this.indexOfUser(user.uid)] = user;
 
         this.db = window.sqlitePlugin.openDatabase({
             name: "accordo.db",
             location: "default"
         });
 
-        let updateUserQuery = 'UPDATE ProfilePictures SET pversion = ' + user.pversion + ', picture = ' + user.picture + ' WHERE uid = ' + user.uid;
+        let updateUserQuery = 'UPDATE ProfilePictures SET pversion="' + user.pversion + '", picture="' + user.picture + '" WHERE uid = "' + user.uid + '"';
         let updateSuccess = function () { console.log("Utente aggiornato nel DB") }
         let updateError = function (error) { console.error("Errore nell'aggiornamento dell'utente nel DB: " + error.message); }
         this.db.executeSql(updateUserQuery, [], updateSuccess, updateError);

@@ -38,7 +38,7 @@ class Channel {
             {
                 quality: 50,
                 sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-                allowEdit: true,
+                allowEdit: false,
                 destinationType: Camera.DestinationType.DATA_URL
             });
     }
@@ -72,7 +72,7 @@ class Channel {
                         "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</button></div>")
                 } else if (posts[i].type == "i") {
                     $("#postsList").append("<div class='post post-image' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <img data-enlargeable class='image-post' data-pid='" + posts[i].pid + "'></div>")
+                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <img data-enlargeable class='image-post' href='fullscreenImg' data-pid='" + posts[i].pid + "'></div>")
                 }
             }
             this.fullScreenImage()
@@ -95,7 +95,7 @@ class Channel {
         $('.image-post').click(function () {
             var src = $(this).attr('src');
             $('#Fullscreen img').attr('src', src);
-            $('#Fullscreen').fadeIn(200);
+            $('#Fullscreen').show();
             $('.navbar').fadeOut(200);
             $('#newPostDiv').fadeOut(200);
             previousScreen = "#channelScreen";

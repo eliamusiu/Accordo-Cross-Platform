@@ -29,7 +29,8 @@
       },
       "cordova-plugin-geolocation": {
         "GPS_REQUIRED": "true"
-      }
+      },
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
       "browser",

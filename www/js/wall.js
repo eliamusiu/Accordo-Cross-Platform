@@ -4,6 +4,7 @@ class Wall {
     constructor() {
         $("#saveProfileChanges").click(this.setProfile)
         $("#addNewChannelButton").click(this.addChannel)
+        $("#editProfilePic").click(this.pickProfilePic);
         this.getProfile()
         previousScreen = "#wallScreen"
     }
@@ -34,7 +35,6 @@ class Wall {
             this._actualUser = Model.getInstance().actualUser
             $("#editUsername").val(this._actualUser.name)
             $("#profilePic").attr('src', "data:image/jpeg;base64," + result.picture);
-            $("#editProfilePic").click(this.pickProfilePic);
         }
         let communicationController = new CommunicationController();
         communicationController.getProfile(response)
@@ -43,8 +43,9 @@ class Wall {
     pickProfilePic() {
         //TODO: fare crop immagine per invio
         navigator.camera.getPicture(
-            function onSuccess(imageData) {
-                new SendImage(imageData)
+            function onSuccess(base64image) {
+                $("#profilePic").attr("src", "data:image/jpeg;base64," + base64image)
+                //new SendImage(imageData)
             },
             function onError(message) {
                 console.log(message);
