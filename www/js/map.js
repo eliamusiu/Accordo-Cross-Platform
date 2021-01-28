@@ -20,9 +20,9 @@ class Map {
         console.log(ctitle + " " + this.latitude + " " + this.longitude)
         communicationController.addPost(ctitle, "l", this.latitude, this.longitude, response, error)
     }
-
+    // access token lio: pk.eyJ1IjoiYW5kcmVsaW8iLCJhIjoiY2tmbnBqeXJjMGZnNDJ5bXExNTIwODI3MSJ9.EvDDudGu2KRCZfr-3tSObQ
     setPostLocation(lat, lon) {
-        mapboxgl.accessToken = "pk.eyJ1IjoiYW5kcmVsaW8iLCJhIjoiY2tmbnBqeXJjMGZnNDJ5bXExNTIwODI3MSJ9.EvDDudGu2KRCZfr-3tSObQ";
+        mapboxgl.accessToken = "pk.eyJ1IjoiZWxpYW11c2l1IiwiYSI6ImNraGFrcXFkbzFmZmIyeG81NW8zZTdhOWMifQ.KgW_Aaa7sK0LCV7u-GQ-rQ";
         var map = new mapboxgl.Map({
             container: 'mapDiv',
             center: [lon, lat],

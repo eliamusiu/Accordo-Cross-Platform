@@ -1,5 +1,4 @@
 class Channel {
-    communicationController;
     db;
 
     constructor(ctitlePar) {
@@ -11,20 +10,24 @@ class Channel {
         console.log(" ---- CANALE " + ctitle)
 
         // Invio post testo
-        $("#sendButton").click(this.sendPost)
+        $("#sendButton").off("click");
+        $("#sendButton").click(this.sendPost);
         // Apertura picker immagine per invio immagine
-        $("#attachImage").off("click")
+        $("#attachImage").off("click");
         $("#attachImage").click(this.attachImage)
         // Apertura mappa per invio posizione
+        $("#attachLocation").off("click");
         $("#attachLocation").click(this.attachLocation)
     }
 
     sendPost() {
-        this.communicationController = new CommunicationController()
+        let communicationController = new CommunicationController()
         let response = function () {
-            $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>")
+            $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>");
+            $("#postInputText").val("");
         }
-        this.communicationController.addPost(ctitle, "t", $("#postInputText").val(), response)
+        let text = $("#postInputText").val();
+        communicationController.addPost(ctitle, "t", text, response);
     }
 
     attachImage() {
@@ -53,7 +56,7 @@ class Channel {
      * inserisce del codice HTML diverso. Inserisce anche i post nel model
      */
     getPosts() {
-        this.communicationController = new CommunicationController()
+        let communicationController = new CommunicationController()
         let response = function (result) {
             // Rimozione dei post precedenti sia dal model che dall'html
             Model.getInstance().clearPosts()
@@ -87,7 +90,7 @@ class Channel {
                 map.setPostLocation(result.posts[postIndex].lat, result.posts[postIndex].lon);
             });
         }
-        this.communicationController.getChannel(ctitle, response.bind(this));
+        communicationController.getChannel(ctitle, response.bind(this));
     }
 
     fullScreenImage() {
@@ -193,7 +196,7 @@ class Channel {
      * @param {*} profilePicToRequest 
      */
     getMissingPictures(profilePicToRequest) {
-        this.communicationController = new CommunicationController();
+        let communicationController = new CommunicationController();
 
         for (let i = 0; i < profilePicToRequest.length; i++) {
             var postAuthor = Model.getInstance().searchUser(profilePicToRequest[i]);
@@ -212,7 +215,7 @@ class Channel {
                     }
                 });
             }
-            this.communicationController.getUserPicture(response.bind(this), profilePicToRequest[i]);
+            communicationController.getUserPicture(response.bind(this), profilePicToRequest[i]);
         }
     }
     //#endregion
@@ -278,7 +281,7 @@ class Channel {
      * @param {*} imagesToRequest 
      */
     getMissingImages(imagesToRequest) {
-        this.communicationController = new CommunicationController();
+        let communicationController = new CommunicationController();
 
         for (let i = 0; i < imagesToRequest.length; i++) {
 
@@ -290,7 +293,7 @@ class Channel {
                     }
                 });
             }
-            this.communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
+            communicationController.getPostImage(response.bind(this), imagesToRequest[i]);
         }
         $("html, body").animate({ scrollTop: $(document).height() }, 250);
     }

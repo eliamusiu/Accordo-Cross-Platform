@@ -277,10 +277,16 @@ body {
     margin: 0 !important;
 }
 
+<<<<<<< HEAD
 #channelsList {
     margin-top: 1em;
 }
 
+=======
+#wallAlert {
+    display: none;
+}
+>>>>>>> b8495e7781cdb082f77c9d80c6c27926533c1d17
 
 /* Channel Screen */
 
@@ -397,9 +403,17 @@ body {
 #sendImageScreen img {
     display: inline-block;
     object-fit: cover;
+    position: relative;
     margin: auto;
     width: 100%;
     height: auto;
+}
+
+#sendImageButton {
+    position: absolute;
+    visibility: hidden;
+    top: 90%;
+    right: 5%;
 }
 
 /* Map Screen */
