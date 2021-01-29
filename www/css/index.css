@@ -273,6 +273,10 @@ body {
     border: none;
 }
 
+.modal-body * {
+    margin: auto;
+}
+
 #profileAlert {
     margin: 0 !important;
 }
@@ -297,11 +301,22 @@ body {
     margin: 1em;
     width: fit-content;
     background-color: #F2F2F2;
-    border-radius: 1.5em;
+    border-radius: 0.5em 1.5em 1.5em 1.5em;
+}
+
+.my-post {
+    background-color: #283593;
+    margin-left: auto;
+    border-radius: 1.5em 0.5em 1.5em 1.5em;
+}
+
+.my-post > .content {
+    color: white;
 }
 
 .post .content {
     word-wrap: break-word;
+    margin-bottom: 0em;
 }
 
 .authorDiv {
@@ -310,6 +325,11 @@ body {
 
 #newPostDiv {
     background-color: white;
+    height: 4em;
+}
+
+#newPostDiv *:not(.dropdown-menu) {
+    height: 100% !important;
 }
 
 #textAttachDiv {
@@ -354,7 +374,7 @@ body {
 }
 
 #postsList {
-    padding-bottom: 40px;
+    padding-bottom: 50px;
 }
 
 /* Fullscreen image */
@@ -393,11 +413,13 @@ body {
 
 /* SendImage Screen */
 #sendImageScreen {
+    display: flex;
     justify-content: center;
+    align-items: center;
     width: 100%;
 }
 
-#sendImageScreen img {
+#imageToSend  {
     display: inline-block;
     object-fit: cover;
     position: relative;

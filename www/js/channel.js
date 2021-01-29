@@ -23,7 +23,9 @@ class Channel {
     sendPost() {
         let communicationController = new CommunicationController()
         let response = function () {
-            $("#postsList").append("<div class='post post-text'> <p class='content'>" + $("#postInputText").val() + "</p></div>");
+            $("#postsList").append("<div class='post post-text my-post'>" +
+                "<p class='content'>" + $("#postInputText").val() + "</p></div>")
+            $("html, body").animate({ scrollTop: $(document).height() }, 250);
             $("#postInputText").val("");
         }
         let text = $("#postInputText").val();
@@ -65,23 +67,17 @@ class Channel {
             let posts = result.posts.reverse()
             for (let i = 0; i < posts.length; i++) {
 
-                Model.getInstance().addPost(posts[i])
-
-                if (posts[i].type == "t") {
-                    $("#postsList").append("<div class='post post-text' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <p class='content'>" + posts[i].content + "</p></div>")
-                } else if (posts[i].type == "l") {
-                    $("#postsList").append("<div class='post post-location' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</button></div>")
-                } else if (posts[i].type == "i") {
-                    $("#postsList").append("<div class='post post-image' data-pid='" + posts[i].pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + posts[i].pversion + "' data-uid='" + posts[i].uid + "'>" +
-                        "<span class='authorSpan ml-2'>" + posts[i].name + "</span> </div> <img data-enlargeable class='image-post' href='fullscreenImg' data-pid='" + posts[i].pid + "'></div>")
+                Model.getInstance().addPost(posts[i]);
+                if (Model.getInstance().actualUser.uid == posts[i].uid) {
+                    this.myPostHTML(posts[i]);
+                } else {
+                    this.othersPostHTML(posts[i]);
                 }
             }
             this.fullScreenImage()
             this.openProfilePicturesDataBase()
             this.openImagesDataBase()
-            
+
             // Apertura mappa per i post di tipo posizione
             $(".locationButton").click(function () {
                 console.log("click");
@@ -91,6 +87,35 @@ class Channel {
             });
         }
         communicationController.getChannel(ctitle, response.bind(this));
+    }
+
+    myPostHTML(post) {
+        if (post.type == "t") {
+            $("#postsList").append("<div class='post post-text my-post' data-pid='" + post.pid + "'>" +
+                "<p class='content'>" + post.content + "</p></div>")
+        } else if (post.type == "l") {
+            $("#postsList").append("<div class='post post-location my-post' data-pid='" + post.pid + "'>" +
+                "<button class='locationButton btn btn-secondary'>Posizione</button></div>")
+        } else if (post.type == "i") {
+            $("#postsList").append("<div class='post post-image my-post' data-pid='" + post.pid + "'>" +
+                "<img data-enlargeable class='image-post' href='fullscreenImg' data-pid='" + post.pid + "'></div>")
+        }
+    }
+
+    othersPostHTML(post) {
+        if (post.name == null) {
+            post.name = "Autore sconosciuto"
+        }
+        if (post.type == "t") {
+            $("#postsList").append("<div class='post post-text' data-pid='" + post.pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + post.pversion + "' data-uid='" + post.uid + "'>" +
+                "<span class='authorSpan ml-2'>" + post.name + "</span> </div> <p class='content'>" + post.content + "</p></div>")
+        } else if (post.type == "l") {
+            $("#postsList").append("<div class='post post-location' data-pid='" + post.pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + post.pversion + "' data-uid='" + post.uid + "'>" +
+                "<span class='authorSpan ml-2'>" + post.name + "</span> </div> <button class='locationButton btn btn-secondary'>Posizione</button></div>")
+        } else if (post.type == "i") {
+            $("#postsList").append("<div class='post post-image' data-pid='" + post.pid + "'> <div class='authorDiv'> <img class='profile-picture' data-pversion='" + post.pversion + "' data-uid='" + post.uid + "'>" +
+                "<span class='authorSpan ml-2'>" + post.name + "</span> </div> <img data-enlargeable class='image-post' href='fullscreenImg' data-pid='" + post.pid + "'></div>")
+        }
     }
 
     fullScreenImage() {
@@ -179,7 +204,11 @@ class Channel {
                 $(".profile-picture").each(function () {
                     if ($(this).data("uid") == usersInChannel[i].uid) {
                         let picture = Model.getInstance().searchUser(usersInChannel[i].uid).picture
-                        $(this).attr("src", "data:image/jpeg;base64," + picture)
+                        if (picture == "null") {
+                            $(this).attr("src", "img/profilePic.png")
+                        } else {
+                            $(this).attr("src", "data:image/jpeg;base64," + picture)
+                        }
                     }
                 });
             }
@@ -211,7 +240,11 @@ class Channel {
                 }
                 $(".profile-picture").each(function () {
                     if ($(this).data("uid") == profilePicToRequest[i]) {
-                        $(this).attr("src", "data:image/jpeg;base64," + result.picture)
+                        if (result.picture == "null") {
+                            $(this).attr("src", "img/profilePic.png")
+                        } else {
+                            $(this).attr("src", "data:image/jpeg;base64," + result.picture)
+                        }
                     }
                 });
             }
